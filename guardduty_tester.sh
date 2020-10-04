@@ -16,6 +16,25 @@
 # load IP addresses created by templates
 source localIps.sh
 
+help="
+This script simulates attacks to generate AWS GuardDuty findings.\n
+\n
+Specify an attack type to simulate as an argument. To run all attacks, do\n
+not specify any attack names.\n
+\n
+The attacks available are \n
+ - internal-port-scan\n
+ - ssh-brute-force\n
+ - rdp-brute-force\n
+ - cryptominer\n
+ - dns-exfiltration\n
+ - malware-c2\n
+\n
+For example, to run the cryptominer simulation, execute\n
+\n
+./guardduty_tester.sh cryptominer\n
+"
+
 # simulate external recon
 #echo 'External port probe on a temporarily unprotected port'
 
@@ -195,8 +214,14 @@ case $1 in
     dns_exfiltration
     malware_c2
     ;;
+  help)
+    echo -e $help
+    exit 1
+    ;;
   *)
     echo "Unknown command '$1', no simulations will be executed."
+    echo
+    echo -e $help
     exit 1
     ;;
 esac
